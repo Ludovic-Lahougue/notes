@@ -32,6 +32,10 @@ export class NotesController {
     name: 'auteur',
     required: false,
   })
+  @ApiQuery({
+    name: 'category',
+    required: false,
+  })
   @ApiOkResponse({
     description: 'list of notes',
     type: [NoteDto],
@@ -39,10 +43,12 @@ export class NotesController {
   async findAll(
     @Query('title') title?: string,
     @Query('auteur') auteur?: string,
+    @Query('category') category?: string,
   ): Promise<NoteDto[]> {
     const notes = await this.notesService.findAll({
       title,
-      auteur
+      auteur,
+      category,
     });
     return notes.map((note) => new NoteDto(note));
   }

@@ -19,16 +19,11 @@ export class Note {
     public auteur?: string;
 
     @Column()
+    public category?: string;
+
+    @Column()
     public createdAt: Date = new Date();
   
     @Column()
     public updatedAt: Date = new Date();
-
-    public static fromProperties(value: Note): Note {
-        const note = new Note();
-        note.id = value.id;
-        note.title = value.title;
-        note.text = value.text;
-        return note;
-    }
 }

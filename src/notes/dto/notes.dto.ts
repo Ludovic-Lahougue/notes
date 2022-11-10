@@ -15,6 +15,9 @@ export class NoteDto {
     auteur: string;
 
     @ApiProperty()
+    category: string;
+
+    @ApiProperty()
     createdAt: Date;
 
     @ApiProperty()
@@ -25,6 +28,7 @@ export class NoteDto {
         this.title = value.title ?? '';
         this.text = value.text ?? '';
         this.auteur = value.auteur ?? '';
+        this.category = value.category ?? '';
         this.createdAt = value.createdAt ?? new Date();
         this.updatedAt = value.updatedAt ?? new Date();
     }
