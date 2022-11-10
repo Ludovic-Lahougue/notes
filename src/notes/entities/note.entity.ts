@@ -16,6 +16,9 @@ export class Note {
     public text?: string;
 
     @Column()
+    public auteur?: string;
+
+    @Column()
     public createdAt: Date = new Date();
   
     @Column()
