@@ -4,6 +4,8 @@ import { Repository } from 'typeorm';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import { Note } from './entities/note.entity';
+import { ListFilter } from './entities/filters.entity';
+
 
 @Injectable()
 export class NotesService {
@@ -13,7 +15,7 @@ export class NotesService {
   ) {}
 
   async create(createNoteDto: CreateNoteDto): Promise<Note> {
-    const titleNote = await this.findAll();
+    const titleNote = await this.findAll({ title: createNoteDto.title });
     if (titleNote.length > 0)
       throw new ConflictException('Existing title');
 
@@ -24,8 +26,8 @@ export class NotesService {
     })
   }
 
-  findAll(): Promise<Note[]> {
-    return this.noteRepository.find();
+  findAll(filter: ListFilter): Promise<Note[]> {
+    return this.noteRepository.findBy(filter);
   }
 
   async findOne(id: number): Promise<Note> {

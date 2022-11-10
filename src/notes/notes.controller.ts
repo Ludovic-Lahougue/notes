@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { NotesService } from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
@@ -24,12 +24,26 @@ export class NotesController {
   }
 
   @Get()
+  @ApiQuery({
+    name: 'title',
+    required: false,
+  })
+  @ApiQuery({
+    name: 'auteur',
+    required: false,
+  })
   @ApiOkResponse({
     description: 'list of notes',
     type: [NoteDto],
   })
-  async findAll(): Promise<NoteDto[]> {
-    const notes = await this.notesService.findAll();
+  async findAll(
+    @Query('title') title?: string,
+    @Query('auteur') auteur?: string,
+  ): Promise<NoteDto[]> {
+    const notes = await this.notesService.findAll({
+      title,
+      auteur
+    });
     return notes.map((note) => new NoteDto(note));
   }
 
